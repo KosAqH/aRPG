@@ -4,6 +4,8 @@ var knockback = Vector2.ZERO
 
 onready var stats = $Stats
 
+const DeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
+
 func _physics_process(delta):
 	knockback = knockback.move_toward(Vector2.ZERO, 200 * delta)
 	knockback = move_and_slide(knockback)
@@ -17,4 +19,7 @@ func _on_Hurtbox_area_entered(area):
 
 
 func _on_Stats_no_health():
+	var enemyDeathInstance = DeathEffect.instance()
+	get_parent().add_child(enemyDeathInstance)
+	enemyDeathInstance.global_position = self.global_position
 	queue_free()
