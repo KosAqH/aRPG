@@ -44,7 +44,7 @@ func move_state(delta):
 	input_vector = input_vector.normalized()
 	if input_vector != Vector2.ZERO:
 		roll_vector = input_vector
-		sword_hitbox.knockback_vector = roll_vector
+		sword_hitbox.knockback_vector = input_vector
 		# moving
 		
 		#animation stuff

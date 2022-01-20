@@ -23,18 +23,17 @@ enum {
 var state = IDLE
 
 func _physics_process(delta):
-	knockback = knockback.move_toward(Vector2.ZERO, 200 * FRICTION)
+	knockback = knockback.move_toward(Vector2.ZERO, FRICTION * delta)
 	knockback = move_and_slide(knockback)
 	
 	match state:
 		IDLE:
-			velocity = velocity.move_toward(Vector2.ZERO, 200 * FRICTION)
+			velocity = velocity.move_toward(Vector2.ZERO, FRICTION * delta)
 			seek_player()
 		WANDER:
 			pass
 		CHASE:
 			var player = playerDetectionZone.player
-			print(player)
 			if player != null:
 				var direction = player.global_position - global_position
 				velocity = velocity.move_toward(direction.normalized() * MAX_SPEED, ACCELERATION * delta)
@@ -47,11 +46,10 @@ func seek_player():
 		state = CHASE
 	
 func _on_Hurtbox_area_entered(area):
-	knockback = area.knockback_vector * 100;
+	knockback = area.knockback_vector * 150;
 	stats.health -= area.damage
 	hurtbox.create_hit_effect()
 	#queue_free()
-
 
 func _on_Stats_no_health():
 	var enemyDeathInstance = DeathEffect.instance()
