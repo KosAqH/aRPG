@@ -10,6 +10,7 @@ export var FRICTION = 200
 onready var sprite = $BatSprite
 onready var stats = $Stats
 onready var playerDetectionZone = $PlayerDetectionZone
+onready var hurtbox = $Hurtbox
 
 const DeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 
@@ -48,8 +49,7 @@ func seek_player():
 func _on_Hurtbox_area_entered(area):
 	knockback = area.knockback_vector * 100;
 	stats.health -= area.damage
-	if stats.health <= 0:
-		queue_free()
+	hurtbox.create_hit_effect()
 	#queue_free()
 
 
