@@ -14,7 +14,7 @@ onready var playerDetectionZone = $PlayerDetectionZone
 onready var hurtbox = $Hurtbox
 onready var softCollision = $SoftCollision
 onready var wanderController = $WanderController
-
+onready var animationPlayer = $AnimationPlayer
 
 const DeathEffect = preload("res://Effects/EnemyDeathEffect.tscn")
 
@@ -69,6 +69,7 @@ func _on_Hurtbox_area_entered(area):
 	knockback = area.knockback_vector * 150;
 	stats.health -= area.damage
 	hurtbox.create_hit_effect()
+	hurtbox.start_invincibility(0.4)
 	#queue_free()
 
 func _on_Stats_no_health():
@@ -84,3 +85,11 @@ func check_for_new_state():
 func update_wander():
 	state = pick_random_state([IDLE, WANDER])
 	wanderController.start_wander_time(rand_range(1,3))
+
+
+func _on_Hurtbox_invincibility_ended():
+	animationPlayer.play("Stop")
+
+
+func _on_Hurtbox_invincibility_started():
+	animationPlayer.play("Start")
