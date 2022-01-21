@@ -1,4 +1,4 @@
-[gd_scene load_steps=60 format=2]
+[gd_scene load_steps=61 format=2]
 
 [ext_resource path="res://World/Bush.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Player/Player.tscn" type="PackedScene" id=2]
@@ -10,6 +10,7 @@
 [ext_resource path="res://UI/HealthUI.tscn" type="PackedScene" id=8]
 [ext_resource path="res://World/Tree.tscn" type="PackedScene" id=9]
 [ext_resource path="res://Utilities/WanderController.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Utilities/Camera2D.tscn" type="PackedScene" id=11]
 
 [sub_resource type="ConvexPolygonShape2D" id=1]
 points = PoolVector2Array( 32, 32, 0, 32, 0, 0, 32, 0 )
@@ -487,10 +488,14 @@ points = PoolVector2Array( 0, 0, 32, 0, 32, 32, 0, 32 )
 
 [node name="World" type="Node2D"]
 
-[node name="Camera2D" type="Camera2D" parent="."]
+[node name="Camera2D" parent="." instance=ExtResource( 11 )]
 position = Vector2( 240, 152 )
-current = true
-smoothing_enabled = true
+
+[node name="Top-Left" parent="Camera2D/Limits" index="0"]
+position = Vector2( -88, -88 )
+
+[node name="Bottom-Right" parent="Camera2D/Limits" index="1"]
+position = Vector2( 440, 320 )
 
 [node name="Background" type="Sprite" parent="."]
 position = Vector2( -472, -88 )
@@ -567,3 +572,5 @@ position = Vector2( 96, 104 )
 [node name="HealthUI" parent="CanvasLayer" instance=ExtResource( 8 )]
 
 [node name="WanderController" parent="." instance=ExtResource( 10 )]
+
+[editable path="Camera2D"]
